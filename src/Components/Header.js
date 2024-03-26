@@ -8,7 +8,7 @@ import { addUser, removeUser } from "../Utils/UserSlice";
 import { useNavigate } from "react-router-dom";
 
 const Header = () => {
-  const abc = useSelector((store) => store.user);
+  const currentUser = useSelector((store) => store.user);
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const handleSignOut = () => {
@@ -26,7 +26,7 @@ const Header = () => {
     onAuthStateChanged(auth, (user) => {
       if (user) {
         const { uid, email, displayName, photoURL } = user;
-        console.log(user);
+        // console.log(user);
         dispatch(
           addUser({
             uid: uid,
@@ -48,10 +48,14 @@ const Header = () => {
     <div className="absolute px-8 py-2 bg-gradient-to-b flex justify-between from-black w-screen pl-28 z-10">
       <img className="w-44 " alt="logo" src={Logo} />
 
-      {abc && (
-        <div className="flex pr-16">
-          <img alt="" src=""></img>
-          <button onClick={handleSignOut} className="font-bold">
+      {currentUser && (
+        <div className="flex mr-10 justify-between w-32 items-center p-1">
+          <img
+            alt="user_logo"
+            className="w-10 h-10 rounded-lg"
+            src={currentUser?.photoURL}
+          ></img>
+          <button onClick={handleSignOut} className="font-bold text-white">
             Sign out
           </button>
         </div>

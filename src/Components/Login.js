@@ -10,7 +10,7 @@ import {
 import { auth } from "../Utils/Firebase";
 import { useDispatch } from "react-redux";
 import { addUser } from "../Utils/UserSlice";
-
+import { user_logo } from "../Utils/Constants";
 const Login = () => {
   const [isSignInForm, setIsSignInForm] = useState(true);
   const [errorMessage, setErrorMessage] = useState(null);
@@ -31,6 +31,7 @@ const Login = () => {
     );
     // console.log(message);
     setErrorMessage(message);
+    if (message) return;
 
     if (!isSignInForm) {
       //sign Up logic
@@ -44,7 +45,7 @@ const Login = () => {
           const user = userCredential.user;
           updateProfile(user, {
             displayName: name.current.value,
-            photoURL: "https://example.com/jane-q-user/profile.jpg",
+            photoURL: user_logo,
           })
             .then(() => {
               const { uid, email, displayName, photoURL } = auth.currentUser;
